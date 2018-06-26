@@ -18,3 +18,6 @@ web/.htaccess
 # Composer
 vendor/*
 !vendor/.gitkeep
+
+# Themes
+node_modules
