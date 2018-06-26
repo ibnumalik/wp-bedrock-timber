@@ -16,7 +16,10 @@ Timber::$dirname = array('templates', 'views');
 
 class StarterSite extends TimberSite {
 
+	private $manifest;
+
 	function __construct() {
+
 		add_theme_support( 'post-formats' );
 		add_theme_support( 'post-thumbnails' );
 		add_theme_support( 'menus' );
@@ -25,7 +28,8 @@ class StarterSite extends TimberSite {
 		add_filter( 'get_twig', array( $this, 'add_to_twig' ) );
 		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'load_static_assets') );
+		add_action( 'after_setup_theme', array( $this, 'get_manifest' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'load_static_assets' ) );
 		parent::__construct();
 	}
 
@@ -58,10 +62,22 @@ class StarterSite extends TimberSite {
 		return $twig;
 	}
 
-	function load_static_assets() {
-		$path = get_template_directory_uri();
+	function get_manifest() {
+		$manifestFile = get_theme_file_path().'/static/manifest.json';
 
-		wp_enqueue_script('sites', $path . '/static/site.js' );
+		$this->manifest = file_exists($manifestFile) ?
+			json_decode(file_get_contents($manifestFile), true) : [];
+	}
+
+	function get_asset($name) {
+		return isset($this->manifest[$name]) ? $this->manifest[$name] : $name;
+	}
+
+	function load_static_assets() {
+		$path = get_template_directory_uri().'/';
+
+		wp_enqueue_style('styles', $path . $this->get_asset('main.css') );
+		wp_enqueue_script('scripts', $path . $this->get_asset('main.js') );
 	}
 
 }
