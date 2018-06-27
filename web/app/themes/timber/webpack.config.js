@@ -1,10 +1,12 @@
 const path = require('path');
+const proxyUrl = 'bedrock.local';
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -41,10 +43,16 @@ module.exports = {
       filename: 'dist/app.[hash].css'
     }),
 
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dist'], { watch: true }),
 
     new ManifestPlugin({
       fileName: path.resolve(__dirname, 'static/manifest.json')
+    }),
+
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: 3300,
+      proxy: proxyUrl
     })
   ],
 
