@@ -43,7 +43,7 @@ module.exports = {
       filename: 'dist/app.[hash].css'
     }),
 
-    new CleanWebpackPlugin(['dist'], { watch: true }),
+    new CleanWebpackPlugin(['dist'], { watch: true, beforeEmit: true }),
 
     new ManifestPlugin({
       fileName: path.resolve(__dirname, 'static/manifest.json')
@@ -52,7 +52,11 @@ module.exports = {
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 3300,
-      proxy: proxyUrl
+      proxy: proxyUrl,
+      files: [
+        '**/*.php',
+        '**/*.twig'
+      ]
     })
   ],
 
