@@ -9,14 +9,31 @@
 	<body class="{{body_class}}" data-template="base.twig">
 		<header class="header" >
 			{% block header %}
-				<div class="wrapper">
-					<h1 class="hdr-logo" role="banner">
-						<a class="hdr-logo-link" href="{{site.url}}" rel="home">{{site.name}}</a>
-					</h1>
-					<nav id="nav-main" class="nav-main" role="navigation">
-						{% include "menu.twig" with {'menu': menu.get_items} %}
-					</nav><!-- #nav -->
-				</div>
+				<nav class="wrapper navbar navbar-expand-lg navbar-light bg-light">
+					<div class="container">
+						<a class="hdr-logo-link navbar-brand" href="{{site.url}}" rel="home">
+							{{site.name}}
+						</a>
+
+						<button
+							class="navbar-toggler"
+							type="button"
+							data-toggle="collapse"
+							data-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent"
+							aria-expanded="false"
+							aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div
+							id="navbarSupportedContent"
+							class="collapse navbar-collapse nav-main"
+							role="navigation">
+							{% include "menu.twig" %}
+						</div><!-- #nav -->
+					</div>
+				</nav>
 			{% endblock %}
 		</header>
 
