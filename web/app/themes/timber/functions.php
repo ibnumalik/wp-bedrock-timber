@@ -122,7 +122,7 @@ class StarterSite extends TimberSite {
 	/**
 	 * This is where you can add your own functions to twig
 	 *
-	 * @param string $twig geht extension
+	 * @param string $twig get extension
 	 * @return object $twig
 	 */
 	public function add_to_twig( $twig ) {

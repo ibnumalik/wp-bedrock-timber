@@ -1,9 +1,15 @@
 {% extends "tease.twig" %}
 
 {% block content %}
-	<h2 class="h2"><a href="{{post.link}}">{{post.title}}</a></h2>
-		<p>{{post.preview.length(25)}}</p>
+	<div class="card mt-2 mb-2">
 		{% if post.thumbnail.src %}
-			<img src="{{post.thumbnail.src}}" />
+			<img class="card-img-top" src="{{post.thumbnail.src}}" />
 		{% endif %}
+		<div class="card-body">
+			<h2 class="card-title">{{post.title}} </h2>
+			<p class="card-text">{{post.preview.length(25)}}</p>
+			<a href="{{ post.link }}" class="btn btn-primary">Read More</a>
+		</div>
+	</div>
+
 {% endblock %}
