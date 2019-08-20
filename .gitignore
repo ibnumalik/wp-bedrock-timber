@@ -21,3 +21,6 @@ vendor/*
 
 # Themes
 node_modules
+
+# Docker
+database/
