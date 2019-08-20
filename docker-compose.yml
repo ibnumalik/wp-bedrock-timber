@@ -1,0 +1,70 @@
+version: '3.6'
+
+services:
+  nginx:
+    image: nginx:latest
+    restart: always
+    container_name: ${APP_NAME}_nginx
+    depends_on:
+      - php
+    links:
+      - php
+    networks:
+      - web
+      - timber
+    labels:
+      - "traefik.backend=${APP_NAME}"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:${APP_NAME}"
+      - "traefik.enable=true"
+      - "traefik.port=579"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - .:/var/www/html
+
+  database:
+    image: mariadb
+    container_name: ${APP_NAME}_mysql
+    restart: always
+    networks:
+      - timber
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    volumes:
+       - './database:/var/lib/mysql'
+
+  php:
+    build: .
+    restart: always
+    container_name: ${APP_NAME}_php
+    depends_on:
+      - database
+    links:
+      - database
+    networks:
+      - web
+      - timber
+    environment:
+      - DB_HOST=database
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - .:/var/www/html
+      - ./config/php.ini:/usr/local/etc/php/conf.d/php.ini
+
+  composer:
+    image: composer/composer
+    container_name: ${APP_NAME}_composer
+    working_dir: /var/www/html
+    restart: 'no'
+    volumes:
+      - .:/var/www/html:rw,cached
+
+networks:
+  web:
+    external: true
+  timber:
+    external: false
