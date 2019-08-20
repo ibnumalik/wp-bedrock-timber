@@ -66,3 +66,6 @@ Keep track of development and community news.
 * Read and subscribe to the [Roots Blog](https://roots.io/blog/)
 * Subscribe to the [Roots Newsletter](https://roots.io/subscribe/)
 * Listen to the [Roots Radio podcast](https://roots.io/podcast/)
+
+## Docker
+You can use docker to run the app but you will need traefik for it to run. The config file for docker is inspired by this [project](https://github.com/pixelcollective/traefik-ify)
