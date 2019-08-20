@@ -39,7 +39,8 @@
     "oscarotero/env": "^1.2.0",
     "roots/wordpress": "5.2.2",
     "roots/wp-config": "1.0.0",
-    "roots/wp-password-bcrypt": "1.0.0"
+    "roots/wp-password-bcrypt": "1.0.0",
+    "wpackagist-plugin/timber-library": "^1.10"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.4.2",
