@@ -1,6 +1,6 @@
 FROM php:7-fpm
 
-WORKDIR /code
+WORKDIR /var/www/html
 
 # stolen from https://github.com/docker-library/wordpress/blob/549e1bd44995ba414000530749e05d8078dc9467/php7.2/fpm/Dockerfile
 # install the PHP extensions we need
