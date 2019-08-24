@@ -13,11 +13,11 @@ services:
       - web
       - timber
     labels:
-      - "traefik.backend=${APP_NAME}"
-      - "traefik.docker.network=web"
-      - "traefik.frontend.rule=Host:${APP_NAME}"
-      - "traefik.enable=true"
-      - "traefik.port=579"
+      - 'traefik.backend=${APP_NAME}'
+      - 'traefik.docker.network=web'
+      - 'traefik.frontend.rule=Host:${APP_NAME}'
+      - 'traefik.enable=true'
+      - 'traefik.port=579'
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
       - .:/var/www/html
@@ -33,7 +33,7 @@ services:
       - MYSQL_USER=${DB_USER}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     volumes:
-       - './database:/var/lib/mysql'
+      - './database:/var/lib/mysql'
 
   php:
     build: .
@@ -62,6 +62,19 @@ services:
     restart: 'no'
     volumes:
       - .:/var/www/html:rw,cached
+
+  adminer:
+    image: adminer
+    restart: always
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.backend=${APP_NAME}_adminer'
+      - 'traefik.frontend.rule=Host:adminer.timber.local'
+      - 'traefik.docker.network=web'
+      - 'traefik.docker.port=8080'
+    networks:
+      - timber
+      - web
 
 networks:
   web:
