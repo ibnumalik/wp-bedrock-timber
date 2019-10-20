@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
     "start": "webpack-dev-server --open --mode development"
   },
   "keywords": [],
